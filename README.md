@@ -5,15 +5,26 @@ Team Members: Gloria Zheng, Angel Yu, Anvi Agarwal, Kyle Lai, Hadia Faheem
 ### Motivation & Objectives: 
 It can be difficult to determine which companies to invest in and understand their CSR initiatives and business practices. Our project aims to provide an inclusive platform, where individuals can educate themselves on the CSR initiatives, business practices, and sentiment surrounding different companies they’re interested in investing in, as well as helping investors potentially discover new companies doing work to help alleviate issues they care about. In addition, users will be able to study stock performance of these companies, access important financial information, build a sample impact investing portfolio, and see which investments are popular among other users as well. 
 
+### Features:
+- Registration & Login
+- Quizes to test knowledge on ESG, CSR
+- Learning pages with ESG info, news articles
+- Customizable Portfolio with visualization of ESG relevance
+- Viewing other user profiles, portfolios
+- List of stocks grouped by social initiatives, with predicted relevance to those initiatives
+- Stock info: financial, ESG related scoring from Yahoo Finance, CSR hub, stock news classified using prediction
+- NLP text classification to identify recent news by CSR category
+- Discovering, classifying and storing new stocks not in database using yfinance, scraping & fasttext
+
 ### Requirements
--Flask framework, flask_mysqldb
--wtforms
+-Flask framework
+-wtforms: for registration
 -functools
 -yfinance module
--APScheduler module
+-APScheduler module: to update daily prices
 -BeautifulSoup
--SQLAlchemy
--Fasttext module and g++ compiler
+-SQLAlchemy, flask_mysqldb
+-Fasttext module and g++ compiler: for training model
 
 -Change the MySQL server when cloning due to expiration. API for stocknews, alphavantage will expire
 
