@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      {{ js_resources|indent(4)|safe }}
+      {{ css_resources|indent(4)|safe }}
+      {{ plot_script|indent(4)|safe }}
+  </head>
+
+<style>
+    .learning_unit {
+        margin: 25px 50px 75px 50px;
+    
+    }
+    .title {
+        text-align:center;
+        color:#1D8C52;
+        font-size:200%;
+    }
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+
+.image-container {
+  background-image: url("https://images.unsplash.com/photo-1491941965945-eadfa7eede18?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1504&q=80"); /* The image used - important! */
+  background-size: cover;
+  position: relative; /* Needed to position the cutout text in the middle of the image */
+  height: 300px; /* Some height */
+}
+
+.text {
+  background-color: #dff7f1;
+  color: black;
+  font-size: 6vw; /* Responsive font size */
+  font-weight: bold;
+  margin: 0 auto; /* Center the text container */
+  padding: 10px;
+  width: 50%;
+  text-align: center; /* Center text */
+  position: absolute; /* Position text */
+  top: 50%; /* Position text in the middle */
+  left: 50%; /* Position text in the middle */
+  transform: translate(-50%, -50%); /* Position text in the middle */
+  mix-blend-mode: screen; /* This makes the cutout text possible */
+}
+    
+.navigation-topics {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    }
+.nav-topic {
+    border: 1px solid #04064a; /* Add a thin border to each list item */
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #dff7f1; /* Add a grey background color */
+    padding: 12px; /* Add some padding */
+    text-align: center;
+    }
+</style>
+<body>
+<nav class="navbar navbar-dark bg-success navbar-expand-md navbar-static-top">
+    <div class="container"> 
+    <a class="navbar-brand" href="#">IVY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!--Left side of navbar-->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/news_topics">News</a>
+        </li>
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"aria-label="Toggle navigation">Discover</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/choose_quiz">Test Your Knowledge</a>
+              <a class="dropdown-item" href="/learn_more_esg">ESG Learning Module</a>
+              <a class="dropdown-item" href="/learn_more_investing">Investing Learning Module</a>
+            </div>
+          </li>
+
+      </ul>
+      <!--Right side of navbar-->
+      <ul class ='nav navbar-nav navbar-right'>
+        {% if session.logged_in %}
+         
+        <li class = 'nav-item active'><a class = 'nav-link' href='/dashboard'>Dashboard</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/logout'>Logout</a></li>
+     <li class = 'nav-item active'><a class = 'nav-link' href='/portfolio'>Portfolio</a></li>
+        {% else %}
+        <li class = 'nav-item active'><a class = 'nav-link' href='/register'>Register</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/login'>Login</a></li>
+        {% endif %}
+        </ul>
+
+        <!--Search Bar -->
+        <form class="form-inline my-2 my-lg-0" action = '/search'>
+        <input class="form-control mr-sm-2" type="text" name = 'searcher' placeholder="Enter Ticker" aria-label="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search </button>
+      </form>
+
+    </div>
+    </div>
+        </nav>
+
+  <div class="image-container">
+      <div class="text">Investing Learning Module</div>
+  </div>
+    
+<div class = "learning_unit">
+
+    
+    <br>
+    
+    <div class = "navigation">
+        <h4 class = 'border border-dark rounded' style = "color:black; text-align:center">Navigation menu</h4>
+        <ul class='navigation-topics'>
+            <li class= 'nav-topic'><a href="#topic_1">What is the difference between saving and investing?</a></li>
+            <li class= 'nav-topic'><a href="#topic_2">Why should I invest?</a></li>
+            <li class= 'nav-topic'><a href="#topic_3">How much should I invest?</a></li>
+            <li class= 'nav-topic'><a href="#topic_4">What are the downsides to investing?</a></li>
+            <li class= 'nav-topic'><a href="#topic_5">You mentioned common types of investments above, so what are some common types of investments?</a></li>
+            <li class= 'nav-topic'><a href="#topic_6">Other great resources to help you learn more:</a></li>
+        </ul>
+    </div>
+    
+    
+    <br>
+    <br>
+    
+    <div class = "topic_1" id = "topic_1">
+        <h2 style = "color:#1D8C52">What is the difference between saving and investing?</h2>
+        <p>While they may seem similar, saving and investing actually are very different in nature and have different goals.</p>
+        <p>Savings is putting money aside for future use. The purpose of having savings is so you can pay for things that you need, for example your monthly mortgage payment. In addition, it also helps you to prepare for emergencies. For example, in case you become unemployed, you will be drawing upon the money available in your savings account whilst you look for another job or source of income. Your savings money is generally put into bank accounts where it is insured by the Federal Deposit Insurance Corporation (FDIC) for an amount up to $250,000. This means that there is virtually no risk</p>
+        <p>Investing is when you put your money to work. The purpose of an investment is to increase the value of your money over time. For example, if you invested in the stock of Apple, you are thinking that the value of the company Apple will also increase over time. The benefit of investing is that there is potential for greater returns than if you had put the money into a bank account. However, your investments are not insured by any organization and there is often a risk associated with investing.</p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_2" id = "topic_2">
+        <h2 style = "color:#1D8C52">Why should I invest?</h2>
+        <p>Investing can help you achieve financial goals, like buying a home or funding your investment. By investing, you are putting your money to work to achieve these goals.</p>
+        <p>One important concept is the power of compounding. This is the idea of making returns on returns. This is when your returns grow by a larger and larger amount. The image below gives you a visual representation of the power of compounding. </p>
+        <p>Consider the example of Sue:</p>
+        <p>Sue graduated from college and decided to start saving for retirement right away at the age of 20. Assume she invests $3,000 for 40 years until retirement. If the money is just savings, she would have $120,000 by retirement. However, if she invests all the money at an annual return of 6%, she would have $372,143 upon retirement.</p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_3" id = "topic_3">
+        <h2 style = "color:#1D8C52">How much should I invest?</h2>
+        <p>Every person is different and has different investment needs. There is no one size fits all solution and you should assess your personal needs. Some factors to consider are below:</p>
+        <ul>
+            <li><em>How much you have</em> - Can you put aside enough money for an emergency fund, pay rent, pay other daily living expenses etc.?</li>
+            <li><em>Time</em> - What is your investment horizon, or for how long would you be able to save the money?</li>
+            <li><em>Goal</em> - What are you saving for?</li>
+            <li><em>Risk</em> - What is the degree of uncertainty or how much potential financial loss am I able to incur?</li>
+        </ul>
+    </div>
+    
+    <br>
+    <div class = "topic_4" id = "topic_4">
+        <h2 style = "color:#1D8C52">What are the downsides to investing?</h2>
+        <p>Investing has risks. This is one of the factors that you should be considering when deciding whether to invest. However, this does not mean that you shouldn’t invest at all. Rather, it is important to manage the risks associated with investing.</p>
+        <p>One way to manage risk is through diversification. This means investing in different things such that you don’t have all of your eggs in one basket. For example, you may want to put your money in both Apple stock and Disney stock, instead of just one. Or, you may want to divide your money among different types of investments, such as stocks and bonds. Additionally, different types of investments perform differently. For example, during the financial crisis, the prices of equities decreased significantly, whilst the prices of fixed income securities remained relatively stable.</p>
+    </div>
+    <br>
+    <div class = "topic_5" id = "topic_5">
+        <h2 style = "color:#1D8C52">You mentioned common types of investments above, so what are some common types of investments?</h2>
+        <p>There are several main types of investments:</p>
+        <ol>
+            <li><strong>Stocks</strong> which represent ownership in a company. You can get return from investing in a stock either by (1) Buying the stock and as the stock increases, you can sell it at a profit or (2) Buying the stock and receive dividend distributions which companies give to shareholders.
+                <ul>
+                    <li>The risk level for investing in stocks is high as stock price may decrease and there is no guarantee of dividends</li>
+                </ul>
+            </li>
+            <li><strong>Bonds</strong> which represent a loan that you make to the issuer, which can be the federal government, the state government, the municipality, or a corporation. In return, the issuer agrees to pay you interest periodically and repay you the initial value of the loan after a certain period of time. Bonds can provide a predictable stream of cash flows and they also preserve your initial capital, since you are paid the initial value of the loan when the bond matures.
+                <ul>
+                    <li>There is a risk level in investing in a bond, as the issuer could default on its loan or pay back the loan before it matures. However, bonds are generally less volatile than stocks.</li>
+                </ul>
+            </li>
+            <li><strong>Mutual Funds</strong> which pools money from investors and invests them in a broad range of investments including stocks, bonds, and other securities. After you buy into a mutual fund, the fund is managed by an investment advisor. You will have a stake on all the investments that the fund invests in.</li>
+            <li><strong>Exchange-Traded Funds (ETFs)</strong> pool money from investors and usually tracks an underlying index. In other words, ETFs replicates the performance of the underlying index, for example the S&P 500. ETFs are useful because it may be hard for individual investors to track an underlying index otherwise. ETFs allow for electronic trading, give you the ability to use leverage to generate more returns. </li>
+            <li><strong>Annuities</strong> are a form of investment where the company gives a stream of income payments to the purchaser. Specifically, the income payment continues until the user dies. In other words, the user cannot outlive the income stream. After the purchaser submits a payment, the insurance company invests the payment into options or bonds to generate a future flow of income which they then pay to the users.</li>
+        </ol>
+        <p>Below is a graph of the performance of S&P 500 over the last 5 years. The The S&P 500 is a stock market index that measures the stock performance of 500 large companies listed on stock exchanges in the United States. It is one of the most commonly followed equity indices by both new investors and finance professionals alike. Whilst there have been ups and downs, there is an overall upward trend. Compare this to if you had just left the same amount of money in a savings account - the line would be almost flat!. </p>
+        {{ plot_div|indent(4)|safe }}
+    </div>
+    <br>
+    <div class = "topic_6" id = "topic_6">
+        <h2 style = "color:#1D8C52">Other great resources to help you learn more:</h2>
+        <p>Books to Read:</p>
+        <ul>
+            <li>Graham, B., Buffett, W. E., & Zweig, J. (2013). <a href='https://www.amazon.com/Intelligent-Investor-Book-Practical-Counsel/dp/0060155477' target="_blank">The Intelligent Investor: A Book of Practical Counsel. </a>New York: Harper Collins.</li>
+            <li>Malkiel, B. G. (2007). <a href='https://www.amazon.com/Random-Walk-Down-Wall-Street/dp/0393358380/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1588552550&sr=1-1' target="_blank">A Random Walk Down Wall Street: The Time-Tested Strategy for Successful Investing.</a> New York: W.W. Norton.</li>
+            <li>Lefèvre, E. (2006). <a href='https://www.amazon.com/Reminiscences-Stock-Operator-Edwin-Lefevre/dp/168422294X/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1588552724&sr=1-3' target="_blank">Reminiscences of a Stock Operator.</a> Hoboken, NJ: Wiley.</li>
+            <li>Lynch, P., & Rothchild, J. (2000). <a href='https://www.amazon.com/One-Wall-Street-Already-Market/dp/0140127925/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1588552780&sr=1-2' target="_blank">One Up On Wall Street: How to Use What You Already Know to Make Money in the Market.</a> New York: Simon & Schuster.</li>
+            <li>Engel, L., & Hecht, H. R. (1994). <a href='https://www.amazon.com/How-Buy-Stocks-Louis-Engel/dp/0316353809/ref=sr_1_3?dchild=1&keywords=how+to+buy+stocks+engel&qid=1588552834&s=books&sr=1-3' target="_blank">How to Buy Stocks. </a>Boston: Little, Brown and Company.</li>
+        </ul>
+    </div>
+    <br>
+    <p>Websites to Visit:</p>
+    <ul>
+        <li><a href='http://i.investopedia.com/inv/pdf/tutorials/beginner.pdf' target='_blank'>Investopedia’s Investing 101: A Tutorial for Beginner Investors</a></li>
+        <li><a href='https://www.khanacademy.org/college-careers-more/personal-finance/pf-investment-vehicles-insurance-and-retirement' target='_blank'>Khan Academy’s Online Course on Investments and Retirement</a></li>
+        <li><a href='https://www.investor.gov/introduction-investing' target='_blank'>US Securities and Exchange Commission’s Guide to Investing</a></li>
+        <li><a href='https://www.marketwatch.com/game' target='_blank'>Marketwatch Free Virtual Stock Exchange</a></li>
+    </ul>
+    <small><strong>References</strong></small> 
+        <br>
+        <small class = 'text-muted'><a href = "https://www.schwab.com/how-to-invest/investing-basics" target="_blank">Investing basics: FAQs by Charles Schwab</a></small>
+    </div>
+<script>
+  jQuery($ => {
+    // The speed of the scroll in milliseconds
+    const speed = 1000;
+
+    $('a[href*="#"]')
+      .filter((i, a) => a.getAttribute('href').startsWith('#') || a.href.startsWith(`${location.href}#`))
+      .unbind('click.smoothScroll')
+      .bind('click.smoothScroll', event => {
+        const targetId = event.currentTarget.getAttribute('href').split('#')[1];
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          event.preventDefault();
+          $('html, body').animate({ scrollTop: $(targetElement).offset().top }, speed);
+        }
+      });
+  });
+</script>
+<script> // When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>    
+    
+    </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+<style media="screen">
+.carousel-item {
+height: 100vh;
+min-height: 350px;
+background: no-repeat center center scroll;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
+header.masthead {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(20, 90, 80, 0.7) 0%, rgba(20, 90, 80, 0.7)100%), url("https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+header.masthead h1 {
+  font-size: 2.25rem;
+}
+@media (min-width: 992px) {
+  header.masthead {
+    height: 100vh;
+    min-height: 40rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+  header.masthead p {
+    font-size: 2rem;
+  }
+  header.masthead h1 {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  header.masthead h1 {
+    font-size: 3.5rem;
+  }
+}
+.singular-page-landing .navbar{
+    display:None}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+</style>
+      
+<header class="masthead" id = 'landing'>
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-10 align-self-end">
+                        <h1 class="text-uppercase text-white font-weight-bold">Ivy Investing</h1>
+                        <hr class="divider my-4" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white font-weight-bold mb-5">Invest in Yourself. Invest in Your Community. Invest in Your World.</p>
+                        <a class="btn btn-success btn-xl" href="#website-info">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+      
+<nav class="navbar navbar-dark bg-success navbar-expand-md sticky-top">
+    <div class="container"> 
+    <a class="navbar-brand" href="#">IVY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!--Left side of navbar-->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/news_topics">News</a>
+        </li>
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"aria-label="Toggle navigation">Discover</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/choose_quiz">Test Your Knowledge</a>
+              <a class="dropdown-item" href="/learn_more_esg">ESG Learning Module</a>
+              <a class="dropdown-item" href="/learn_more_investing">Investing Learning Module</a>
+            </div>
+          </li>
+
+      </ul>
+      <!--Right side of navbar-->
+      <ul class ='nav navbar-nav navbar-right'>
+        {% if session.logged_in %}
+         
+        <li class = 'nav-item active'><a class = 'nav-link' href='/dashboard'>Dashboard</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/logout'>Logout</a></li>
+     <li class = 'nav-item active'><a class = 'nav-link' href='/portfolio'>Portfolio</a></li>
+        {% else %}
+        <li class = 'nav-item active'><a class = 'nav-link' href='/register'>Register</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/login'>Login</a></li>
+        {% endif %}
+        </ul>
+
+        <!--Search Bar -->
+        <form class="form-inline my-2 my-lg-0" action = '/search'>
+        <input class="form-control mr-sm-2" type="text" name = 'searcher' placeholder="Enter Ticker" aria-label="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search </button>
+      </form>
+
+    </div>
+    </div>
+        </nav>
+
+      
+      
+<header>
+ <section class='carousel' id='website-info'>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <!-- Slide One - Set the background image for this slide in the line below -->
+      <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1535320903710-d993d3d77d29?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80')">
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="display-4" style="color:black;position: absolute; bottom: 625%;left:25%; right:15%"><strong>Explore Investing Options</strong></h2>
+          {% if not session.logged_in %}
+          <a href='/login' class="btn btn-outline-dark" style=" position: absolute; bottom: 525%;left:45%; "><strong>Log In To Get Started</strong></a>
+          {% endif %}
+        </div>
+      </div>
+      <!-- Slide Two - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80')">
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="display-4 text-dark"><strong>How Much Do You Know About ESG Investing?</strong></h2>
+          <a href='/choose_quiz' class="btn btn-outline-dark"><strong>Test Your Knowledge</strong></a>
+        </div>
+      </div>
+      <!-- Slide Three - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1579532536935-619928decd08?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="display-4 outline-dark">Stay Up to Date on ESG News</h2>
+          <a href='/news_topics' class="btn btn-outline-light" ><strong>Read the Headlines</strong></a>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+  </div>
+    </section>
+</header>
+
+<script>
+  jQuery($ => {
+    // The speed of the scroll in milliseconds
+    const speed = 1000;
+
+    $('a[href*="#"]')
+      .filter((i, a) => a.getAttribute('href').startsWith('#') || a.href.startsWith(`${location.href}#`))
+      .unbind('click.smoothScroll')
+      .bind('click.smoothScroll', event => {
+        const targetId = event.currentTarget.getAttribute('href').split('#')[1];
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          event.preventDefault();
+          $('html, body').animate({ scrollTop: $(targetElement).offset().top }, speed);
+        }
+      });
+  });
+</script>
+<script> // When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>

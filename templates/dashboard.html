@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    
+<style>
+    body{background-image:url("https://images.unsplash.com/photo-1530387870690-f16c543e838f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80")}
+    
+</style>
+
+<br>
+<h1 class='text-center'><strong>Welcome {{session.username}}!</strong></h1>
+<h2 class='text-center'><strong>What would you like to do today?</strong></h2>
+
+<br>
+<br>
+<div class="card-deck">
+  <div class="card text-center border-success" style='border-width:medium'>
+    <img class="card-img-top" src="https://images.unsplash.com/photo-1568234928966-359c35dd8327?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="Card image cap">
+    <div class="card-body">
+        <h2 class="card-title"><strong>My Portfolio</strong></h2>
+      <p class="card-text">Check out your portfolio to see how your investments have been performing!</p>
+    <a href='/portfolio'type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+  Go
+</a>
+    </div>
+  </div>
+  <div class="card text-center border-success" style='border-width:medium'>
+    <img class="card-img-top" src="https://images.unsplash.com/photo-1549421263-6064833b071b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="Card image cap">
+    <div class="card-body">
+        <h2 class="card-title"><strong>Stock Directory</strong></h2>
+      <p class="card-text">Discover some new companies to expand your portfolio!</p>
+      <a href='/allstocks' type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+  Go
+</a>
+    </div>
+  </div>
+  <div class="card text-center border-success" style='border-width:medium'>
+    <img class="card-img-top" src="https://pocket-image-cache.com/direct?resize=w2000&url=https%3A%2F%2Fi2.wp.com%2Fwww.brainpickings.org%2Fwp-content%2Fuploads%2F2014%2F09%2Fhugme_ciraolo17.jpg%3Fw%3D680%26ssl%3D1" alt="Card image cap">
+    <div class="card-body">
+        <h2 class="card-title"><strong>Find Other Users</strong></h2>
+      <p class="card-text">Find out what other users are investing in!</p>
+     <a href ='/users_chart' type="button" class="btn btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+  Go
+</a>
+    </div>
+  </div>
+</div>
+
+<footer class="page-footer text-center font-small mdb-color darken-2 mt-4 wow fadeIn" style='background-color:#216112'>
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-white">
+      © 2020 Copyright: 
+      <a href="/" target="_blank"> Ivy Investing</a>
+    </div>
+    <!--/.Copyright-->
+ 
+  </footer>
+
+{% endblock %}

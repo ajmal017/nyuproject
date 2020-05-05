@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}Stock Not Found{% endblock %}
+{% block body %}
+
+<div class = 'sorry'>
+<h1>Oops! We don't have info for that stock yet!</h1><br>
+{% if notfound == False %}
+<form action='/discover/{{ticker}}/' method='POST'>
+    <button class="btn btn-primary btn-lg  my-2 my-sm-0" type=submit>Try to Discover {{ticker}}</button>
+</form>
+{% endif %}
+</div>
+
+{% endblock %}

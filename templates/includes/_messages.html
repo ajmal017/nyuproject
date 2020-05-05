@@ -1,0 +1,33 @@
+<!--flashes message for redirects-->
+<style>
+    .alert-fixed {
+    position:fixed; 
+    margin-top: 50%;
+    top: 0px; 
+    left: 0px; 
+    width: 100%;
+    z-index:9999; 
+    border-radius:0px
+}
+</style>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+
+  {% endif %}
+{% endwith %}
+
+<!--flashes message for error login-->
+{% if error %}
+  <div class='alert alert-danger'>{{error}}</div>
+{% endif %}
+
+<!--flashes message for success-->
+{% if msg %}
+  <div class='alert alert-success'>
+      {{msg}}
+</div>
+{% endif %}

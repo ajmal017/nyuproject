@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<style>
+    .search-box {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 20px; 
+        width: 100%;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+    }
+    .user-list {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    .user-list th{
+        font-size: 20px;
+        background-color: #f1f1f1;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+    .user-list td{
+        padding-top:6px;
+        padding-bottom:6px;
+    }
+    .user-list tr:hover {
+        background-color:#f2f2f2;
+    }
+</style>
+
+<br>
+<div>ESG Category
+<form name="Item_1" action="/allstocks" method = 'POST'>
+    <select name="Item_1">
+        <option value = "0" selected>All</option>
+        <option value='Environment'>Environment</option> 
+        <option value='Health-&-Wellness'>Health</option>   
+        <option value='Human-Resources-&-Diversity'>Diversity</option>     
+        <option value='Philanthropy-&-Corporate-Contributions'>Philanthropy</option>     
+    </select>
+    <button type="submit">Search</button>
+</form>
+</div>
+<br>
+<h3>{{category}}</h3>
+<div class = "company table ">
+<table class = "table table-responsive table-hover " id = "stocks" >
+    <tr>
+        <th style = "width:20%">Company</th>
+        <th style = "width:10%">Industry</th>
+        <th style = "width:10%">Symbol</th>
+        <th style = "width:10%">CSR Relevance</th>
+    </tr>
+    {% for stock in stocks %}
+    <tr>
+        <td><a href="/stock/{{stock.symbol}}">{{stock.name}}</a></td>
+        <td>{{stock.industry}}</td>
+        <td>{{stock.symbol}}</td>
+        <td>{{stock.relevancy}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+<style>
+    .search-box {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 20px; 
+        width: 100%;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+    }
+    .user-list {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    .user-list th{
+        font-size: 20px;
+        background-color: #f1f1f1;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+    .user-list td{
+        padding-top:6px;
+        padding-bottom:6px;
+    }
+    .user-list tr:hover {
+        background-color:#f2f2f2;
+    }
+    
+
+</style>
+
+
+<input class = "search-box" type="text" id = "myInput" onkeyup = "myFunction()" placeholder="search for a user...">
+
+<br>
+
+<table class = "user-list" id = "myTable">
+    <tr class = "header">
+        <th>Username</th>
+        <th>Stock</th>
+        <th>Shares</th>
+    </tr>
+    {% for user in user_list %}
+    <tr>
+        <td>{{user[1]}}</td>
+        {% if user[2] != None %}
+        <td>{{user[2]}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+        {% if user[3] != None %}
+        <td>{{user[3]}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    
+</table>
+<br>
+<br>
+<br>
+
+
+
+   
+
+<script>
+function myFunction() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value;
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

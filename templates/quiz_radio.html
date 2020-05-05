@@ -1,0 +1,39 @@
+{% extends 'layout.html' %} 
+
+{% block body %}
+
+<style>
+hidden{
+    display:None}
+</style>
+<div class="jumbotron">
+      <h1><em>Test Your Knowledge</em></h1>
+      <br>
+      <form method="post">
+        {{form.hidden_tag()}}
+          <hidden>{{form.username.label}}{{form.username}}</hidden>
+        <br>
+        {{form.q1.label }}{{form.q1(style="list-style:none")}}
+        <br>
+        {{form.q2.label }}{{form.q2(style="list-style:none")}}
+        <br>
+        {{form.q3.label }}{{form.q3(style="list-style:none")}}
+        <br>
+        {{form.q4.label }}{{form.q4(style="list-style:none")}}
+        <br>
+        {{form.q5.label }}{{form.q5(style="list-style:none")}}
+        <br>
+        {{form.q6.label }}{{form.q6(style="list-style:none")}}
+        <br>
+        {{form.q7.label }}{{form.q7(style="list-style:none")}}
+        <br>
+        {{form.q8.label }}{{form.q8(style="list-style:none")}}
+        <br>
+        {{form.submit()}}
+
+      </form>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+
+    <style>
+   .income_box {     
+        position: absolute;
+        width: 500px;
+        height: 65px;
+        left: 600px;
+        top: 200px;
+        text-align: center;
+
+        background: #FFFFFF;
+        border: 3px solid #f1f1f1;
+        box-sizing: border-box;
+                }
+    .acct_box {     
+        position: absolute;
+        width: 500px;
+        height: 65px;
+        left: 65px;
+        top: 200px;
+        text-align: center;
+
+        background: #FFFFFF;
+        border: 3px solid #f1f1f1;
+        box-sizing: border-box;
+                }
+    .button {
+        position: absolute;
+        width: 350px;
+        height: 65px;
+        left: 850px;
+        top: 200px;
+        text-align: center;
+
+        background: #FFFFFF;
+        border: 3px solid #f1f1f1;
+        box-sizing: border-box;
+        }
+    .radar_chart {
+        position: absolute;
+        width: 700px;
+        height: 306px;
+        left: 220px;
+        top: 300px;
+        text-align: center;
+
+        background: #FFFFFF;
+        
+        }
+     .list {
+        position: absolute;
+        width: 1135px;
+        height: 178px;
+        left: 65px;
+        top: 750px;
+
+        background: #FFFFFF;
+        border: 3px solid #f1f1f1;
+        box-sizing: border-box;
+        }
+      .users_box {
+          position: absolute;
+            width: 350px;
+            left: 850px;
+            height:312px;
+            top: 300px;
+            text-align: center;
+
+            background: #FFFFFF;
+            border: 3px solid #f1f1f1;
+            box-sizing: border-box;
+        }
+        .title {
+            position: absolute;
+            left: 65px;
+            top: 75px;
+        }
+        table, th, td {
+            width: 1135px;
+            border-collapse: collapse;
+            padding: 15px;
+            border: 3px solid #f1f1f1;
+            text-align: center;
+        }
+        .wrapper {
+            overflow:hidden;
+            overflow-y:scroll;
+            height:178px;
+        }
+        .user_wrapper {
+            overflow:hidden;
+            overflow-y:scroll;
+            height:312px;
+        }
+    </style>
+
+<div class = 'portfolio'>
+<div class="title">   
+    <h1>My Portfolio</h1>
+    <p><span>Username: {{session["username"]}}    </span><span>User ID: {{session["user_id"]}}</span></p>
+</div>
+
+<div class="radar_chart">
+    <img src="/plot.png" height="400" width ="auto">
+</div>
+<div class="acct_box">
+    <h><b>Account Value</b><br/></h>
+    {% set ns = namespace(account=0) %}
+    {% for x in portfolios %}
+                {% set ticker = x.ticker %}
+                {% for y in info %}
+                   {%if y.symbol == ticker %}
+                       {% set ns.account= ns.account + (x.shares * y.current_price|float) %}
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    <h>${{"{:,.2f}".format(ns.account)}}</h>
+</div>
+        
+ <div class= "wrapper">  
+    <div class="list">
+        <table>
+        <tr>
+            <th>Symbol</th>
+            <th>CSR Rating</th>
+            <th>Shares</th>
+            <th>Current Value</th>
+            <th>Price/Share</th>
+            <th>Price Change</th>
+        </tr>
+          
+            {% for x in portfolios %}
+                {% set ticker = x.ticker %}
+                {% for y in info %}
+                   {%if y.symbol == ticker %}
+            <tr>
+                <th>{{x.ticker}}</th>
+                <th>{{y.ch_csr_score}}</th>
+                <th>{{x.shares}}</th>
+                <th>${{ "%.2f"|format(x.shares|int * y.current_price|int) }}</th>
+                <th>{{"%.2f"|format(y.current_price|float)}}</th>
+                {% if y.price_change|float > 0 %}
+                <th style='color:green'>{{"%.2f"|format(y.price_change|float)}}</th>
+                {% else %}
+                <th style='color:red'>{{"%.2f"|format(y.price_change|float)}}</th>
+                {% endif %}
+                    {% endif %}
+                    {% endfor %}
+            </tr>
+            {% endfor %}
+
+    </table>
+    <br>
+    <br>
+    <br>
+</div>
+</div>
+<div class="income_box">
+        <h><b>Returns</b><br/></h>
+    {% set ns = namespace(returns=0) %}
+    {% for x in portfolios %}
+                {% set ticker = x.ticker %}
+                {% for y in info %}
+                   {%if y.symbol == ticker %}
+                        {% set og_price = (x.shares * x.buy_price|float) %}
+                        {% set now = (x.shares * y.current_price|float) %}
+                        {% if og_price == now %}
+                        {% else %}
+                            {% set ns.returns= ns.returns + (og_price - now) %}
+                        {% endif %}
+                  {% endif %}
+                {% endfor %}
+    {% endfor %}
+    <h>${{"{:,.2f}".format(ns.returns)}}</h>          
+    </div>
+     
+</div>
+{% endblock %}
+   
+        

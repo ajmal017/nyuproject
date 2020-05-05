@@ -1,0 +1,176 @@
+{% extends 'layout.html' %} 
+
+{% block body %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+
+<style>
+    body{
+        margin-bottom:75px;
+        margin-top:25px;
+        background-image:url('https://images.unsplash.com/photo-1510922746027-a2ebacd4b43f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80')
+    }
+
+.quiz-questions {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+
+.q {
+  border: 1px solid #18571e; /* Add a thin border to each list item */
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #d6ffe6; /* Add a grey background color */
+  padding: 12px; /* Add some padding */
+  color: #018033;
+}
+
+.glow {
+  font-size: 80px;
+  color: #03400c;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #3bdb54, 0 0 20px #3bdb54, 0 0 30px #00b81d, 0 0 40px #00b81d, 0 0 50px #00b81d, 0 0 60px #00b81d, 0 0 70px #00b81d;
+  }
+  
+  to {
+    text-shadow: 0 0 20px #3bdb54, 0 0 30px #45ff62, 0 0 40px #45ff62, 0 0 50px #45ff62, 0 0 60px #45ff62, 0 0 70px #45ff62, 0 0 80px #45ff62;
+  }
+}
+.jumbotron{
+    background-color:#f2fff7;}
+</style>
+<body>
+
+<div class='jumbotron'>
+      <h1 class = 'glow'>Test Your Investing Knowledge</h1>
+      <br>
+      <br>
+      <form method="post">
+        {{form.hidden_tag()}}
+        <div class = 'username'>
+            {{form.username(placeholder ='Enter Name', class='form-control')}}
+        </div>
+        <br>
+        {{form.q1.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q1 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly" style="padding-right: 5px;">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.q2.label }}{{form.q2(placeholder='Enter integers only', class= 'form-control')}}
+        <br>
+        {{form.q3.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q3 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.q4.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q4 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly" style="padding-right: 5px;">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.q5.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q5 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly" style="padding-right: 5px;">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.q6.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q6 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly" style="padding-right: 5px;">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.q7.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q7 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly" style="padding-right: 5px;">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.q8.label }}
+          <ul class = 'quiz-questions' style="list-style-type:none;">
+          {% for subfield in form.q8 %}
+          <li class= 'q'>
+              <div class="pretty p-icon p-curve p-jelly" style="padding-right: 5px;">
+              {{subfield}}
+                  <div class="state p-success">
+                      <i class="icon mdi mdi-check"></i>
+                      <label><strong>{{subfield.label}}</strong></label>
+                  </div>
+              </div>
+          </li>
+          {% endfor %}
+         </ul>
+        <br>
+        {{form.submit(class="btn btn-lg btn-success")}}
+
+      </form>
+    </div>
+</body>
+
+
+
+{% endblock %}

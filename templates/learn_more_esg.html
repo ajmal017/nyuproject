@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      {{ js_resources|indent(4)|safe }}
+      {{ css_resources|indent(4)|safe }}
+      {{ plot_script|indent(4)|safe }}
+  </head>
+
+<style>
+    .learning_unit {
+        margin: 25px 50px 75px 50px;
+    
+    }
+    .title {
+        text-align:center;
+        color:#1D8C52;
+        font-size:200%;
+    }
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+.image-container {
+  background-image: url("https://images.unsplash.com/photo-1491941965945-eadfa7eede18?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1504&q=80"); /* The image used - important! */
+  background-size: cover;
+  position: relative; /* Needed to position the cutout text in the middle of the image */
+  height: 300px; /* Some height */
+}
+
+.text {
+  background-color: #dff7f1;
+  color: black;
+  font-size: 6vw; /* Responsive font size */
+  font-weight: bold;
+  margin: 0 auto; /* Center the text container */
+  padding: 10px;
+  width: 50%;
+  text-align: center; /* Center text */
+  position: absolute; /* Position text */
+  top: 50%; /* Position text in the middle */
+  left: 50%; /* Position text in the middle */
+  transform: translate(-50%, -50%); /* Position text in the middle */
+  mix-blend-mode: screen; /* This makes the cutout text possible */
+}
+    
+.navigation-topics {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    }
+.nav-topic {
+    border: 1px solid #04064a; /* Add a thin border to each list item */
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #dff7f1; /* Add a grey background color */
+    padding: 12px; /* Add some padding */
+    text-align: center;
+    }
+</style>
+<body>
+<nav class="navbar navbar-dark bg-success navbar-expand-md navbar-static-top">
+    <div class="container"> 
+    <a class="navbar-brand" href="#">IVY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!--Left side of navbar-->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/news_topics">News</a>
+        </li>
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"aria-label="Toggle navigation">Discover</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/choose_quiz">Test Your Knowledge</a>
+              <a class="dropdown-item" href="/learn_more_esg">ESG Learning Module</a>
+              <a class="dropdown-item" href="/learn_more_investing">Investing Learning Module</a>
+            </div>
+          </li>
+
+      </ul>
+      <!--Right side of navbar-->
+      <ul class ='nav navbar-nav navbar-right'>
+        {% if session.logged_in %}
+         
+        <li class = 'nav-item active'><a class = 'nav-link' href='/dashboard'>Dashboard</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/logout'>Logout</a></li>
+     <li class = 'nav-item active'><a class = 'nav-link' href='/portfolio'>Portfolio</a></li>
+        {% else %}
+        <li class = 'nav-item active'><a class = 'nav-link' href='/register'>Register</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/login'>Login</a></li>
+        {% endif %}
+        </ul>
+
+        <!--Search Bar -->
+        <form class="form-inline my-2 my-lg-0" action = '/search'>
+        <input class="form-control mr-sm-2" type="text" name = 'searcher' placeholder="Enter Ticker" aria-label="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search </button>
+      </form>
+
+    </div>
+    </div>
+        </nav>
+
+
+  <div class="image-container">
+      <div class="text">ESG Learning Module</div>
+  </div>
+    
+<div class = "learning_unit">
+
+    
+    <br>
+    
+    <div class = "navigation">
+        <h4 class = 'border border-dark rounded' style = "color:black; text-align:center">Navigation menu</h4>
+        <ul class='navigation-topics'>
+            <li class= 'nav-topic'><a href="#topic_1">What is sustainable investing and how is it different from traditional investing?</a></li>
+            <li class= 'nav-topic'><a href="#topic_2">Why has there been so much attention on sustainable investing?</a></li>
+            <li class= 'nav-topic'><a href="#topic_3">Why should I consider ESG investing?</a></li>
+            <li class= 'nav-topic'><a href="#topic_4">I care about generating returns! Is there a financial case for ESG investing?</a></li>
+            <li class= 'nav-topic'><a href="#topic_5">ESG investing sounds great, how can I make it a part of my investment process?</a></li>
+            <li class= 'nav-topic'><a href="#topic_6">Where does the data for ESG investing even come from, is it reliable?</a></li>
+            <li class= 'nav-topic'><a href="#topic_7">Here are some common myths you might have heard about ESG investing</a></li>
+        </ul>
+    </div>
+    
+    
+    <br>
+    <br>
+    
+    <div class = "topic_1" id = "topic_1">
+        <h2 style = "color:#1D8C52">What is sustainable investing and how is it different from traditional investing?</h2>
+        <p>Sustainable investing (also called sustainable investing, socially responsible investing, mission-related investing) combines traditional investing approaches with insights about society, traditionally non-financial insights to generate long-term outcomes. These insights about society usually involve environmental, social, and governance factors.</p>
+        <h5>Environmental:</h5>
+        <p>With the current state of climate change and the depletion of resources, investors may choose to focus on incorporating sustainability issues into their investment choices. These issues often deal with externalities, such as how the functioning and revenues of the company affect the larger environment in a way that is not incorporated into the prices goods are exchanged on the market.</p>
+        <p>MSCI explains that major issues under this include climate change, natural resources, pollution & waste, and environmental opportunities.</p>
+        <h5>Social:</h5>
+        <p>This aims to answer the central question of “How can a company manage its relationships with its workforce, the societies in which it operates, and the political environment?”</p>
+        <p>MSCI highlights major issues under this include human capital, product liability, stakeholder opposition, and social opportunities.</p>
+        <h5>Governance: </h5>
+        <p>This refers to the rights and responsibilities of the management of the company. This includes its board of directors, shareholders, as well as other relevant stakeholders.</p>
+        <p>MSCI explains that major issues under this include corporate governance and corporate behaviour.</p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_2" id = "topic_2">
+        <h2 style = "color:#1D8C52">Why has there been so much attention on sustainable investing?</h2>
+        <p>ESG investing has been dominating the news in recent years – and for good reason. There are several factors that have contributed to the growth of sustainable investing.</p>
+        <ul>
+            <li>Future financial decision-makers are asking more of companies and are seeking more sustainable investment solutions.</li>
+            <li>Regulators and governments are expanding their focus on incorporating sustainability into investment information and decision making.</li>
+            <li>There is growing recognition that ESG research and analysis can potentially identify investment risks and generate excess returns.</li>
+        </ul>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_3" id = "topic_3">
+        <h2 style = "color:#1D8C52">Why should I consider ESG investing?</h2>
+        <p>There have been an increasing amount of assets dedicated to sustainable investing strategies and this trend has no sign of slowing down. According to BlackRock, assets of sustainable mutual funds and ETFs have risen from less than $0.5 trillion USD in 2013 to almost $2 trillion USD in 2018!</p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_4" id = "topic_4">
+        <h2 style = "color:#1D8C52">I care about generating returns! Is there a financial case for ESG investing?</h2>
+        <p>Yes, there is! There is now an increasing body of research which explain why when companies focus on ESG factors, shareholders are ultimately better off. Alex Edmans, Professor of Finance at the London Business School looked at the Best Companies to Work for America, a widely respected measure of employee satisfaction, over a 28 year period and compared them to companies with similar characteristics that were not on the list and found that the companies on the list outperformed their peers by 89% - 104% over that time.</p>
+        <p>On a more macro level, Bloomberg reported that nine of the biggest ESG mutual funds in the U.S. outperformed the Standard & Poor’s 500 Index last year. Manager of the Brown Advisory fund, one of the best performing ESG mutual funds explains ““It turns out companies that generate strong business results by helping their customers with energy efficiency, solve some of our biggest sustainability challenges, and companies that are productivity leaders by reducing their resource consumption are performing well.” Thus, ESG concerns and generating higher returns isn’t a zero sum game – a greater focus on ESG concerns actually generates higher returns, which is why its becoming an ever-increasing part of the current investment landscape.</p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_5" id = "topic_5">
+        <h2 style = "color:#1D8C52">ESG investing sounds great, how can I make it a part of my investment process?</h2>
+        <h5>Avoid or Advance:</h5>
+        <p>Avoid strategies involve the elimination of certain companies or sectors that are associated with increased ESG risk or which violate the asset owner's values. Advance strategies focus increasing exposure to positive ESG characteristics to align capital with certain behaviours or target specific positive social or environmental outcomes.</p>
+        <h5>Information integration:</h5>
+        <p>This involves the incorporation of ESG information into investment decisions to increase risk-adjusted returns. </p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_6" id = "topic_6">
+        <h2 style = "color:#1D8C52">Where does the data for ESG investing even come from, is it reliable?</h2>
+        <p>ESG data is most often categorised as “non-accounting” information because it captures components important for valuations that are not traditionally reported. The valuation of companies has become more complex, with a growing portion tied up in intangible assets. ESG metrics provide insights into these intangibles, such as brand value and reputation, by measuring decisions taken by company management that affect operational efficiency and future strategic directions.</p>
+        <p>While some critics have argued that ESG data is scarce and unreliable, especially for fundamental analysis, the proliferation of data in the past decades have made it much easier to obtain accurate, reliable information which can then turn into actual investment decisions. Both reporting and investor organizations, such as SASB and Ceres, and CDP data providers, like Bloomberg and MISCI, now have “value-relevant” ESG data on companies.</p>
+    </div>
+    
+    <br>
+    
+    <div class = "topic_7" id = "topic_7">
+        <h2 style = "color:#1D8C52">Finally… here are some common myths you might have heard about ESG investing</h2>
+        <ul>
+            <li>
+                <p>Myth Number 1: Environmental, social, and governance (ESG) programs reduce returns on capital and long-run shareholder value</p>
+                <p>Reality: Companies committed to ESG are finding competitive advantages in product, labour, and capital markets, and portfolios that have integrated “material” ESG metrics have provided average returns to their investors that are superior to those of conventional portfolios, while exhibiting lower risk.</p>
+                <p>The graph below shows you the performance of S&P 500 compared to MSCI KLD 400 Social Index in the past 10 years. The MSCI KLD 400 Social Index is a capitalization weighted index of 400 US securities that provides exposure to companies with outstanding Environmental, Social and Governance (ESG) ratings and excludes companies whose products have negative social or environmental impacts. Feel free interact with the chart - scroll around, zoom in, click on legend entries to hide the corresponding lines, and download using the save button on the left hand side when you're done!</p>
+            </li>
+<div style="text-align:center">{{ plot_div|indent(4)|safe }} </div>
+            <li>
+                <p>Myth Number 2: ESG is already well integrated into mainstream investment management. </p>
+                <p>Reality: The UNPRI signatories have committed themselves only to adhering to a set of principles for responsible investment, a standard that falls well short of integrating ESG considerations into their investment decisions.</p>
+            </li>
+            <li>
+                <p>Myth Number 3: Companies cannot influence the kind of shareholders that buy their shares, and corporate managers must often sacrifice sustainability goals to meet the quarterly earnings targets of increasingly short-term–oriented investors.</p>
+                <p>Reality: Companies that pursue major sustainability initiatives, and publicize them in integrated reports and other communications with investors, have also generally succeeded in attracting disproportionate numbers of longer-term shareholders.</p>
+            </li>
+            <li>
+                <p>Myth Number 4: Consideration of ESG factors might create a conflict with fiduciary duty for some investors.</p>
+                <p>Reality: Many ESG factors have been shown to have positive correlations with corporate financial performance and value, prompting ERISA in 2015 to reverse its earlier instructions to pension funds about the legitimacy of taking account of “non-financial” considerations when investing in companies.</p>
+            </li>
+        </ul>
+    </div>
+
+
+<br>
+<br>
+
+<div class = "reference">
+    <h4>Here are some additional resources to learn more about ESG investing!</h4>
+        <a href = "https://www2.deloitte.com/us/en/insights/industry/financial-services/esg-investing-performance.html" target="_blank">Advancing environmental, social, and governance investing (Deloitte Insights)</a>
+        <br>
+        <a href = "https://www.bloomberg.com/graphics/2020-ten-funds-with-a-conscience" target="_blank" >The Biggest ESG Funds Are Beating the Market (Bloomberg)</a>
+<br>
+<br>
+    <small><strong>References</strong></small> 
+        <br>
+        <small class='text-muted'><a href = "https://www.hbs.edu/faculty/Pages/item.aspx?num=51511" target="_blank">ESG Integration in Investment Management: Myths and Realities (Harvard Business School)</a></small>
+        <br>
+        <small class = 'text-muted'><a href = "https://www.spglobal.com/en/research-insights/articles/what-is-the-s-in-esg" target="_blank">What is the “S” in ESG? (SP Global)</a></small>
+        <br>
+        <small class = 'text-muted'><a href = "https://www.blackrock.com/ch/individual/en/themes/sustainable-investing#sustainable-solutions" target="_blank">Sustainable Investing (Blackrock)</a></small>
+        <br>
+        <small class = 'text-muted'><a href = "https://www.alpha-week.com/why-esg-investing-matters-non-esg-investors" target="_blank">Why ESG Investing Matters to Non-ESG Investors (AlphaWeek)</a></small>
+</div>
+</div>
+<script>
+  jQuery($ => {
+    // The speed of the scroll in milliseconds
+    const speed = 1000;
+
+    $('a[href*="#"]')
+      .filter((i, a) => a.getAttribute('href').startsWith('#') || a.href.startsWith(`${location.href}#`))
+      .unbind('click.smoothScroll')
+      .bind('click.smoothScroll', event => {
+        const targetId = event.currentTarget.getAttribute('href').split('#')[1];
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          event.preventDefault();
+          $('html, body').animate({ scrollTop: $(targetElement).offset().top }, speed);
+        }
+      });
+  });
+</script>
+<script> // When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+{% extends 'layout.html' %} {% block body %}
+<head>
+        <meta charset="utf-8">
+        <h1> This is going to be some graph </h1>
+        <title>Bokeh Scatter Plots</title>
+        {{ js_resources|indent(4)|safe }}
+        {{ css_resources|indent(4)|safe }}
+        {{ plot_script|indent(4)|safe }}
+</head>
+<style>
+    .stock-info {
+        display: grid ;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 1em;
+        grid-auto-rows: minmax(70px, auto);
+    }
+    
+    .stock-info>div {
+        padding: 1em;
+        border: #333 1px solid;
+    }
+    
+    .stock-name {
+        margin-top: 10%;
+        grid-column: 1/3;
+        grid-row: 1/3;
+        align-items: end;
+    }
+    .industry{
+        grid-column: 2/3;
+    }
+    .stock-box{
+        grid-column: 1;
+        grid-row:3;
+    }
+    .stock-price {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-auto-rows: minmax(70px, auto);
+        grid-gap: 1em;
+    }
+    
+    .stock-price>span {
+        border: #333 1px;
+        padding: 1em;
+    }
+    
+    .other_price_info {
+        grid-column: 1
+    }
+    
+    .yahoofinance {
+        grid-column: 1;
+    }
+    
+    .csrhub {
+        padding: 1em;
+        grid-column:2
+    }
+</style>
+<script>
+    $(function(){
+        $('#btn-chk').click(function(){
+            var share = prompt("Enter Number of Shares:", "0");
+            if(share){
+                var entry = {
+                    'shares':parseInt(share),
+                    'ticker':'{{stock.symbol}}'
+                };
+                fetch(`${window.origin}/process`, {
+                    method: 'POST',
+                    credentials: "include",
+                    body: JSON.stringify(entry),
+                    cache: "no-cache",
+                    headers: new Headers({
+                        "content-type": "application/json"
+                    })
+                })
+                
+                .then(function(response) {
+                    if (response.status !== 200) {
+                        console.log(`Looks like there was a problem. Status code: ${response.status}`);
+                        return;
+                    }
+                    response.json().then(function(data) {
+                        console.log(data);
+                        if(data.error){
+                            $('#errorAlert').text(data.error).show();
+                            $('#successAlert').hide();
+                        }
+                        else{
+
+                            $('#successAlert').text('Added {{stock.name}} to Portfolio').show();
+                            $('#errorAlert').hide();
+                            location.reload();
+                        }
+                    });
+                })
+                .catch(function(error) {
+                    console.log("Fetch error: " + error);
+                });
+            }
+           else{
+               console.log('eeeee')
+           }
+            event.preventDefault();
+
+        });
+    });
+
+
+</script>
+<div id ='successAlert' class = 'alert alert-success' role='alert' style='display:none;'></div>
+<div id ='errorAlert' class = 'alert alert-danger' role='alert' style='display:none;'></div>
+<div class=stock-info>
+    <div class=stock-name>
+        <h1>{{stock.name}}</h1>
+        {% if session.logged_in %} 
+        {% if stock_in_list %}
+        <form action = '/stock/{{ticker}}/' method='POST'>
+            <button id='btn-rem' class="btn btn-dark my-2 my-sm-0" type=submit>Remove from Portfolio</button>
+        </form>
+        {% endif %} 
+        {% if not stock_in_list %}
+
+        <button id='btn-chk' class="btn btn-dark my-2 my-sm-0">Add to Portfolio</button>
+
+        {% endif %} 
+        {% endif %}
+
+    </div>
+    <div class=industry>
+        <h2>Industry</h2>{{stock.industry}}
+    </div>
+    <div class = "stock-box">
+        <div class=stock-price>
+            <span class=current_price>
+                <ul>Current Price: ${{stock.current_price}}</ul>
+                <br>
+                <p>Price Change</p>{{stock.price_change}}</span>
+
+            <table class="table table-hover table-borderless table-sm ">
+                <thead>
+                    <tr>
+                        <th>Open Price</th>
+                        <td>{{stock.open_price}}</td>
+                        <th>Daily Volume</th>
+                        <td>{{stock.daily_volume}}</td>
+                    </tr>
+                    <tr class="border-top border-bottom">
+                        <th>Previous Close</th>
+                        <td>{{stock.previous_close}}</td>
+                        <th>High</th>
+                        <td>{{stock.daily_high}}</td>
+                    </tr>
+                    <tr>
+                        <th>Low</th>
+                        <td>{{stock.daily_low}}</td>
+                    </tr>
+                </thead>
+
+            </table>
+            
+            
+        </div>
+    </div>
+    <div class=yahoofinance>
+        <div class=heading_1>
+            <h2>Yahoo Finance Sustainalytics</h2>
+        </div>
+        <table class="table table-responsive table-borderless table-sm">
+            <thead>
+                <tr>
+                    <th>Overall</th>
+                    <td>{{stock.yf_esg_score}}</td>
+                </tr>
+                <tr>
+                    <th>Percentile</th><td>{{stock.yf_esg_percentile}}</td>
+                </tr>
+                <tr>
+                    <th>Environment Risk</th><td>{{stock.yf_env_score}}</td>
+                </tr>
+                <tr>
+                    <th>Social Risk</th><td>{{stock.yf_soc_score}}</td>
+                </tr>
+                <tr>
+                    <th>Governance Risk</th><td>{{stock.yf_gov_score}}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class=csrhub>
+        <div class=heading_2>
+            <h2>CSR Hub Rating</h2>
+        </div>
+        <div class=scores>
+            <span>{{stock.ch_csr_score}}</span>
+        </div>
+    </div>
+</div>
+<!--News Section-->
+<br>
+<br>
+<h1><strong><em><u>{{stock.name}} News</u></em></strong></h1>
+<br>
+<form action='/predict/{{ticker}}/' method='POST'>
+    <button class="btn btn-primary btn-lg  my-2 my-sm-0" type=s ubmit></span>Predict CSR News</button>
+</form>
+{% if not news_exist %}
+<br>
+<div class="not found">Sorry Couldn't Find News</div>
+{% endif %} {% for article in news %}
+<div class="container mt-3">
+    <div class="media border border-success p-3">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1 text-success text-center"><strong>{{article.title}}</strong></h5>
+            <small class='text-muted'>
+        <p>Topic Prediction: {{article.csr_topic}} 
+        <br>Prediction rate: {{article.predict_rate}}  
+        <br>Sentiment: {{article.sentiment}}
+        <br>Published on: {{article.create_date}}</p>
+    </small>
+            <br> {{article.txt}}
+            <br>
+            <br>
+            <div class='text-center'>
+                <a href="{{article.news_url}}" target="_blank" class="btn btn-success btn-md btn-center">Read More</a>
+            </div>
+        </div>
+
+        <img src="{{article.image_url}}" class="mr-3" alt="...">
+    </div>
+</div>
+<br> {% endfor %} {% endblock %}

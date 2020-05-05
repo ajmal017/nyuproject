@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<br>
+<br>
+<br>
+
+<script>
+  window.onload = function () {
+
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+
+    title:{
+        text:'Top 5 Most Popular Companies Among Ivy Investing Users', 
+        fontSize:40
+    },
+
+    axisX:{
+        title: 'Stocks',
+        interval:1
+
+    },
+    axisY2:{
+        interlacedColor: "rgba(1,101,60,.2)",
+        gridColor: "rgba(1,101,60,.1)",
+        title: "Number of Users",
+        interval:1
+    },
+    data: [{
+        type: "bar",
+        name: "companies",
+        axisYType: "secondary",
+        color: "green",
+        dataPoints: [
+            { y: {{t[0]['count']}}, label: '{{t[0]['ticker']}}' },
+            { y: {{t[1]['count']}}, label: '{{t[1]['ticker']}}' },
+            { y: {{t[2]['count']}}, label: '{{t[2]['ticker']}}' },
+            { y: {{t[3]['count']}}, label: '{{t[3]['ticker']}}' },
+            { y: {{t[4]['count']}}, label: '{{t[4]['ticker']}}' },
+
+        ]
+    }]
+  });
+  chart.render();
+
+  }
+  </script>
+<div id="chartContainer" style="height: 320px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<br>
+<br>
+<h3 class='text-center' style='color:#074711'><strong> Looking for a Specific User? </strong><h3>
+    <h5 class='text-center' style='color:#074711'> Head Over to Our User Search Page to See What Stocks All Our Users Are Investing In!<h5>
+    
+<a href="/allusers" class="btn btn-success btn-lg active btn-block" role="button" aria-pressed="true">See Where Specific Users Are Investing</a>
+
+{% endblock %}

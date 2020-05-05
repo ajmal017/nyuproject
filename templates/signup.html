@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </head>
+
+<style media="screen">
+  body {
+  background: #c3f7c6;
+}
+
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.card-signin .card-img-left {
+  width: 45%;
+  background: scroll center url('https://images.unsplash.com/photo-1528587570440-540bdd4219ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80');
+  background-size: cover;
+}
+</style>
+
+
+  <body>
+      
+<nav class="navbar navbar-dark bg-success navbar-expand-md fixed-top">
+    <div class="container"> 
+    <a class="navbar-brand" href="#">IVY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!--Left side of navbar-->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/news_topics">News</a>
+        </li>
+        <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"aria-label="Toggle navigation">Discover</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/learn_more">Learn About ESG Investing</a>
+              <a class="dropdown-item" href="/esg_quiz">Test Your Knowledge</a>
+              <a class="dropdown-item" href="/more_info">Additional Resources</a>
+            </div>
+          </li>
+
+      </ul>
+      <!--Right side of navbar-->
+      <ul class ='nav navbar-nav navbar-right'>
+        {% if session.logged_in %}
+         
+        <li class = 'nav-item active'><a class = 'nav-link' href='/dashboard'>Dashboard</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/logout'>Logout</a></li>
+     <li class = 'nav-item active'><a class = 'nav-link' href='/portfolio'>Portfolio</a></li>
+        {% else %}
+        <li class = 'nav-item active'><a class = 'nav-link' href='/register'>Register</a></li>
+        <li class = 'nav-item active'><a class = 'nav-link' href='/login'>Login</a></li>
+        {% endif %}
+        </ul>
+
+        <!--Search Bar -->
+        <form class="form-inline my-2 my-lg-0" action = '/search'>
+        <input class="form-control mr-sm-2" type="text" name = 'searcher' placeholder="Enter Ticker" aria-label="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search </button>
+      </form>
+
+    </div>
+    </div>
+        </nav>
+      
+      <br>
+      <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body">
+              <h3 class="card-title text-center"><strong>Create Your Account</strong></h3>
+            <p><strong>Sign up below and start investing responsibly today!</strong></p>
+            <br>
+            {% from 'includes/_formhelpers.html' import render_field %}
+    <form method = 'POST' action =''>
+        <div class = 'form-group'>
+            {{render_field(form.username,class_='form-control')}}
+        </div>
+        <div class = 'form-group'>
+            {{render_field(form.password,class_='form-control')}}
+        </div>
+        <div class = 'form-group'>
+            {{render_field(form.confirm,class_='form-control')}}
+        </div>
+        <p><input type = 'submit' class = 'btn btn-lg btn-success btn-block text-uppercase' value ='Submit'></p>
+    </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

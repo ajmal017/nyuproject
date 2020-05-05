@@ -1,0 +1,74 @@
+{% extends 'layout.html' %} 
+{% block body %} 
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Montserrat:900");
+body {
+  margin:90px;
+  padding: 0;
+  height: 100vw;
+}
+
+.title{
+  color: green;
+  white-space: nowrap;
+  position: absolute;
+  font-family: "Montserrat";
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+  text-shadow: 1px 1px 0 #6b9c7f, 1px 2px 0 #6b9c7f, 1px 3px 0 #6b9c7f, 1px 4px 0 #6b9c7f,
+    1px 5px 0 #6b9c7f, 1px 6px 0 #6b9c7f, 1px 7px 0 #6b9c7f, 1px 8px 0 #6b9c7f,
+    5px 13px 15px black;
+  -webkit-text-stroke: 2px black;
+}
+
+.title:hover {
+  transition: 0.3s;
+  transform: scale(1.1)translate(-50%, -50%);
+  text-shadow: 1px -1px 0 #6b9c7f, 1px -2px 0 #6b9c7f, 1px -3px 0 #6b9c7f,
+    1px -4px 0 #6b9c7f, 1px -5px 0 #6b9c7f, 1px -6px 0 #6b9c7f, 1px -7px 0 #6b9c7f,
+    1px -8px 0 #6b9c7f, 5px -13px 15px black, 5px -13px 25px #808080;
+}
+</style>
+
+<br>
+<br>
+
+<div class="title">
+      <h1>DIVERSITY & INCLUSION NEWS</h1>
+    </div>
+<br>
+<br>
+{% for article in display_news %}
+<div class="container mt-3">
+<div class="media border border-success p-3">
+  <div class="media-body">
+    <h5 class="mt-0 mb-1 text-success text-center"><strong>{{article['name']}}</strong></h5>
+    <small class='text-muted'>Published on: {{article['datePublished'].split('T')[0]}}</small>
+    <br>
+    {{article['description']}}
+    <br>
+    <br>
+    <div class='text-center'>
+        <a href="{{article['url']}}" target="_blank" class="btn btn-success btn-md btn-center">Read More</a>
+      </div>
+  </div>
+  {% if 'image' in article.keys(): %}
+  <img src="{{article['image']['thumbnail']['contentUrl']}}" class="mr-3" alt="...">
+  {% elif 'image' in article['provider'][0].keys(): %}
+  <img src="{{article['provider'][0]['image']['thumbnail']['contentUrl']}}" class="mr-3" alt="...">
+  {% else %}
+  <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" class="img-thumbnail" alt="" style='height:110px; width:110px;'>
+  {% endif %}
+</div>
+</div>
+<br>
+{% endfor %}
+
+
+
+{% endblock %}

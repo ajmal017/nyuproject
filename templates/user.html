@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+<div class = user_info>
+    <h1 style="text-align:center;">User Profile</h1>
+    <p>Username: {{user_info.username}}</p>
+    <p>User ID: {{user_info.id}}</p>
+    <p>Name: {{user_info.name}}</p>
+    <p>Email: {{user_info.email}}</p>
+    <p>Register Date: {{user_info.register_date}}</p>
+</div>
+
+
+{% endblock %}

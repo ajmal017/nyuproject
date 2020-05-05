@@ -1,0 +1,138 @@
+{% extends 'layout.html' %} 
+
+{% block body %}
+
+<style>
+    
+body{background-image:url("https://images.unsplash.com/photo-1492892132812-a00a8b245c45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80")}
+    
+.jumbotron{
+    background-image: linear-gradient(to bottom right, #0cf2a2, white);; 
+    border: 20px ridge #024a31;
+    }
+    
+    /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: #157552;
+  width: 1000px;
+  height: 200px;
+  margin-bottom: 10px;
+  perspective: 1000px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 1000px;
+  height: 200px;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 1000px;
+  height: 200px;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #157552;
+  color: white;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: #157552;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/* Style the results card */
+.card-header{
+    background-color: #daf5eb;
+    color: black; 
+    }
+.card{
+    background-color: #157552; 
+    color:white; 
+    border: 5px solid #01291b; 
+    }
+    
+</style>
+
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+$('.popover-dismiss').popover({
+  trigger: 'focus'
+})
+</script>
+<div class="jumbotron">
+      <h1 class='text-center'>{{user.capitalize()}}'s ESG Quiz Report</h1>
+      <br>
+      {% set count = namespace(value=0) %}
+      {% for i in range(0,myanswers|length): %}
+        <div class="flip-card border border-dark rounded">
+          <div class="flip-card-inner border border-dark rounded">
+            <div class="flip-card-front border border-dark rounded">
+              <br>
+              <h4><strong><em>{{questions[i]}}</em></strong></h4> 
+                <h4>Your answer to Question {{i+1}} was: <span><strong>{{myanswers[i]}}</strong></span></h4>
+            </div>
+            <div class="flip-card-back border border-dark rounded">
+              {% if myanswers[i] == right_answers[i]: %}
+                {% set count.value = count.value + 1 %}
+                    <br>
+                    <br>
+                    <h1>You got the answer right!</h1>
+              {% elif myanswers[i] != right_answers[i]: %}
+                   <br>
+                   <h4>You got the answer wrong!</h4>
+                    <h4>The correct answer is: <strong>{{right_answers[i]}}</strong></h4>
+                   <br>
+                   <a tabindex="0" class="btn btn-lg btn-outline-light" role="button" data-toggle="popover" data-trigger="focus" title="What's The Right Answer?" data-content='{{explanation[i]}}' data-placement="bottom">Here's Why:</a> 
+                    <br>
+                    <br>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <br>
+      {% endfor %}
+
+  <div class="card text-center">
+      <div class="card-header">
+          <h3>Results</h3>
+      </div>
+  <div class="card-body">
+    <h3 class="card-title">You scored {{count.value}} out of 8 on the ESG Quiz</h3>
+    {% if count.value == 8 %}
+        <h5 class="card-text">You got 100% -- You Know A Lot About ESG!</h5>
+    {% elif 8 > count.value and count.value >= 6 %}
+        <h5 class="card-text">You seem to know a lot about ESG, but there's still more to learn!</h5>
+    {% elif 6 > count.value and count.value >=3 %}
+        <h5 class='card-text'> You have some experience with ESG, but there's a lot more for you to explore!</h5>
+    {% elif 3 > count.value %} 
+        <h5 class='card-text'> Don't have much experience with ESG? No Problem!</h5>
+    {% endif %}
+    <h6 class='card-text'>Head over to our <a href='/learn_more_esg' style='color:#3ddbd9'>ESG Learning Module</a> to learn more!</h6>
+  </div>
+</div>
+
+
+</div>
+    
+{% endblock %}
