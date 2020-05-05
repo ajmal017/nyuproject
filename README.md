@@ -15,8 +15,23 @@ It can be difficult to determine which companies to invest in and understand the
 -SQLAlchemy
 -Fasttext module and g++ compiler
 
+-Change the MySQL server when cloning due to expiration. API for stocknews, alphavantage will expire
+
 ### Directory
--templates: 
-  -includes:
--textanalysis:
--sql:
+- templates: all HTML pages
+  - includes: helper HTML for navbar, forms, wrapper
+- textanalysis: 
+  - analtext.py : trains,loads & runs the model, need to create a new model when cloning since it was too big to upload.
+  - requirements.txt : lists requirements needed for fasttext and g++ compiler
+  - categ.train, categ.valid : training and validation data to run the model
+  - training_data.csv : news articles scraped using scrapy from ESG site to create training & validation, split 70,30%
+  - ESG categories.csv : contains the topics model is trained on. The webserver only has 4 categories since the stock news processed is slightly different which messes with model accuracy for range of categories it can process.
+  - News.ipynb : contains functions to retrieve stock news for model to run on. In jupyter notebook form. The actual functions are compiled onto app.py
+ - Run_project.ipynb : runs the app.py on a jupyter server
+ - Yahoo_Finance_Installation.ipynb : installs yfinance module and bokeh graphing using jupyter server
+- app.db : database for quiz and non-stock news
+- app.py : Main Flask webserver. Change the MySQL server when cloning due to expiration. API for stocknews, alphavantage will expire
+- esg_models.py : Contains radio/spider graph function
+- gloria_graph_for_anvi.ipynb : Contains graph function for stock price over time using yfinance and bokeh
+- gloria_yahoo_finance.ipynb : Contains demo function for getting stock info from yfinance
+- nyuproject.sql : Contains datatables for Users, Stocks, Portfolios, Articles, Topics, Stocks_Topics
