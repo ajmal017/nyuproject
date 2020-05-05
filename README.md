@@ -17,16 +17,16 @@ It can be difficult to determine which companies to invest in and understand the
 - Discovering, classifying and storing new stocks not in database using yfinance, scraping & fasttext
 
 ### Requirements
--Flask framework
--wtforms: for registration
--functools
--yfinance module
--APScheduler module: to update daily prices
--BeautifulSoup
--SQLAlchemy, flask_mysqldb
--Fasttext module and g++ compiler: for training model
+- Flask framework
+- wtforms: for registration
+- functools
+- yfinance module
+- APScheduler module: to update daily prices
+- BeautifulSoup
+- SQLAlchemy, flask_mysqldb
+- Fasttext module and g++ compiler: for training model
 
--Change the MySQL server when cloning due to expiration. API for stocknews, alphavantage will expire
+- Change the MySQL server when cloning due to expiration. API for stocknews, alphavantage will expire
 
 ### Directory
 - templates: all HTML pages
