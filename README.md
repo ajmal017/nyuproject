@@ -1,5 +1,5 @@
 # nyuproject
-Project Title: Social Impact Investing Recommender 
+##Project Title: Social Impact Investing Recommender 
 Team Members: Gloria Zheng, Angel Yu, Anvi Agarwal, Kyle Lai, Hadia Faheem
 
 Motivation & Objectives: 
